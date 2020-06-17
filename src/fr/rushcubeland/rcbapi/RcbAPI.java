@@ -4,7 +4,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import fr.rushcubeland.rcbapi.account.Account;
 import fr.rushcubeland.rcbapi.account.RankUnit;
-import fr.rushcubeland.rcbapi.battlepass.BattlePassUnit;
 import fr.rushcubeland.rcbapi.commands.NpcCommand;
 import fr.rushcubeland.rcbapi.database.DatabaseManager;
 import fr.rushcubeland.rcbapi.database.MySQL;
@@ -14,7 +13,6 @@ import fr.rushcubeland.rcbapi.listeners.PlayerQuit;
 import fr.rushcubeland.rcbapi.network.Network;
 import fr.rushcubeland.rcbapi.network.Server;
 import fr.rushcubeland.rcbapi.queue.Queue;
-import fr.rushcubeland.rcbapi.tools.ItemBuilder;
 import fr.rushcubeland.rcbapi.tools.PacketReader;
 import fr.rushcubeland.rcbapi.tools.cameras.CameraManager;
 import fr.rushcubeland.rcbapi.tools.hologram.Hologram;
@@ -37,7 +35,6 @@ public class RcbAPI extends JavaPlugin {
 
     public static NPC npc = null;
 
-    private ItemBuilder itemBuilder;
     private Hologram hologram;
     private Tablist tablist;
     private CameraManager cameraManager;
@@ -160,10 +157,6 @@ public class RcbAPI extends JavaPlugin {
 
         });
 
-    }
-
-    public ItemBuilder getItemBuilder() {
-        return itemBuilder;
     }
 
     public Hologram getHologram() {
