@@ -18,8 +18,6 @@ public class PlayerQuit implements Listener {
         PacketReader reader = new PacketReader();
         reader.uninject(player);
 
-        RcbAPI.getInstance().getAccount(player).ifPresent(Account::onLogout);
-
     }
 
 }

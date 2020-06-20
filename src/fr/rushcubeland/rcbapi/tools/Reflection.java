@@ -10,8 +10,7 @@ import org.bukkit.entity.Player;
 
 public class Reflection {
 
-
-    public void setValue(Object obj,String name,Object value){
+    public static void setValue(Object obj,String name,Object value){
         try{
             Field field = obj.getClass().getDeclaredField(name);
             field.setAccessible(true);
@@ -19,7 +18,7 @@ public class Reflection {
         }catch(Exception e){}
     }
 
-    public Object getValue(Object obj,String name){
+    public static Object getValue(Object obj,String name){
         try{
             Field field = obj.getClass().getDeclaredField(name);
             field.setAccessible(true);
@@ -32,7 +31,7 @@ public class Reflection {
         ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
     }
 
-    public void sendPacket(Packet<?> packet){
+    public static void sendPacket(Packet<?> packet){
         for(Player player : Bukkit.getOnlinePlayers()){
             sendPacket(player, packet);
         }

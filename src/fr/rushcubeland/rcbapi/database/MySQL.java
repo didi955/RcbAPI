@@ -1,7 +1,5 @@
 package fr.rushcubeland.rcbapi.database;
 
-import fr.rushcubeland.rcbapi.RcbAPI;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +13,7 @@ public class MySQL {
         PreparedStatement s = connection.prepareStatement(qry);
         s.executeUpdate();
         s.close();
+        connection.close();
     }
 
     public static Object query(Connection connection, String qry, Function<ResultSet, Object> consumer) throws SQLException {
@@ -22,6 +21,7 @@ public class MySQL {
         PreparedStatement s = connection.prepareStatement(qry);
         ResultSet rs = s.executeQuery();
         s.close();
+        connection.close();
         return consumer.apply(rs);
 
     }
@@ -31,6 +31,7 @@ public class MySQL {
         ResultSet rs = s.executeQuery();
         consumer.accept(rs);
         s.close();
+        connection.close();
     }
 
     public static void createTables() {

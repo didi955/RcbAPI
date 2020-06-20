@@ -18,7 +18,7 @@ public class DatabaseAccess {
     private void setupHikariCP(){
         final HikariConfig hikariConfig = new HikariConfig();
 
-        hikariConfig.setMaximumPoolSize(20);
+        hikariConfig.setMaximumPoolSize(15);
         hikariConfig.setJdbcUrl(credentials.toURI());
         hikariConfig.setUsername(credentials.getUser());
         hikariConfig.setPassword(credentials.getPass());
@@ -26,6 +26,11 @@ public class DatabaseAccess {
         hikariConfig.setIdleTimeout(300000L);
         hikariConfig.setLeakDetectionThreshold(300000L);
         hikariConfig.setConnectionTimeout(10000L);
+        hikariConfig.addDataSourceProperty("cachePrepStmts", true);
+        hikariConfig.addDataSourceProperty("prepStmtCacheSize", 300);
+        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
+        hikariConfig.addDataSourceProperty("useServerPrepStmts", true);
+        hikariConfig.addDataSourceProperty("cacheResultSetMetadata", true);
 
         this.hikariDataSource = new HikariDataSource(hikariConfig);
 

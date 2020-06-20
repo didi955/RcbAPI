@@ -1,6 +1,5 @@
 package fr.rushcubeland.rcbapi.account;
 
-import fr.rushcubeland.rcbapi.RcbAPI;
 import fr.rushcubeland.rcbapi.database.DatabaseManager;
 import fr.rushcubeland.rcbapi.database.MySQL;
 import org.bukkit.ChatColor;
@@ -11,12 +10,19 @@ import java.util.Arrays;
 
 public enum RankUnit {
 
-    JOUEUR("Joueur", 20, "§7 ", ChatColor.GRAY),
-    VIP("VIP", 15, "§e[VIP] §f", ChatColor.YELLOW),
-    VIPP("VIP+", 10, "§5[VIP+] §f", ChatColor.DARK_PURPLE),
-    ASSISTANT("Assistant", 5, "§a[Assistant] §f", ChatColor.GREEN),
-    MODERATEUR("Modérateur", 3, "§6[Modérateur] §f", ChatColor.GOLD),
-    DEVELOPPEUR("Développeur", 2, "§9[Développeur] §f", ChatColor.BLUE),
+    JOUEUR("Joueur", 50, "§7", ChatColor.GRAY),
+    VIP("VIP", 40, "§e[VIP] §f", ChatColor.YELLOW),
+    VIPP("VIP+", 30, "§b[VIP+] §f", ChatColor.DARK_PURPLE),
+    ASSISTANT("Assistant", 21, "§a[Assistant] §f", ChatColor.GREEN),
+    ASSISTANTE("Assistante", 20, "§a[Assistante] §f", ChatColor.GREEN),
+    DEVELOPPEUR("Développeur", 14, "§9[Développeur] §f", ChatColor.BLUE),
+    DEVELOPPEUSE("Développeuse", 15, "§9[Développeuse] §f", ChatColor.BLUE),
+    MODERATEUR("Modérateur", 12, "§6[Modérateur] §f", ChatColor.GOLD),
+    MODERATRICE("Modératrice", 11, "§6[Modératrice] §f", ChatColor.GOLD),
+    COPINE("Copine", 10, "§d[♥] §f", ChatColor.LIGHT_PURPLE),
+    AMI("Ami", 8, "§3[Ami] §f", ChatColor.DARK_AQUA),
+    AMIE("Amie", 7, "§3[Amie] §f", ChatColor.DARK_AQUA),
+    RESPMOD("RespMod", 5, "§6[RespMod] §f", ChatColor.GOLD),
     ADMINISTRATEUR("Admin", 0, "§c[Admin] §f", ChatColor.RED);
 
     private String name;

@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import fr.rushcubeland.rcbapi.RcbAPI;
+import fr.rushcubeland.rcbapi.tools.Reflection;
 import net.minecraft.server.v1_15_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

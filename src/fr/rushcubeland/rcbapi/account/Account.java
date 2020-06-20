@@ -138,7 +138,7 @@ public class Account extends AbstractData {
     }
 
     private void sendDataOfPlayerBoosterToMysql() {
-        if(hasBooster) {
+        if(hasBooster == true) {
             try {
                 MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO boosters (uuid, booster, start, end) VALUES ('%s', '%s', '%s', '%s')",
                         getUUID(), dataBoosters.getBooster().getName(), dataBoosters.getStart(), dataBoosters.getEnd()));
@@ -165,35 +165,30 @@ public class Account extends AbstractData {
         });
     }
 
-    private void getTaskAsync(){
-        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                String[] data = getDataOfPlayerFromMySQL();
-                //ArrayList<String> dataPlayerperms = getDataOfPlayerPermissionsFromMySQL();
-                    // = getDataOfPlayerBoosterFromMySQL();
-                //}
+    private void getTaskNoAsync(){
+        String[] data = getDataOfPlayerFromMySQL();
+        //ArrayList<String> dataPlayerperms = getDataOfPlayerPermissionsFromMySQL();
+        // = getDataOfPlayerBoosterFromMySQL();
+        //}
 
-                if(newPlayer){
-                    dataRank.setRank(RankUnit.JOUEUR);
-                    dataCoins.setCoins(0);
-                }
-                else
-                {
-                    dataRank.setRank(RankUnit.getByName(data[0]), Long.parseLong(data[1]));
-                    dataCoins.setCoins(Long.parseLong(data[2]));
-                    if(hasBooster){
-                        //String[] dataBooster = getDataOfPlayerBoosterFromMySQL();
-                        //dataBoosters.setBooster(BoostersUnit.getByName(dataBooster[0]), Long.parseLong(dataBooster[1]), Long.parseLong(dataBooster[2]));
-                    }
-                }
+        if(newPlayer){
+            dataRank.setRank(RankUnit.JOUEUR);
+            dataCoins.setCoins(0);
+        }
+        else
+        {
+            dataRank.setRank(RankUnit.getByName(data[0]), Long.parseLong(data[1]));
+            dataCoins.setCoins(Long.parseLong(data[2]));
+            if(hasBooster){
+                //String[] dataBooster = getDataOfPlayerBoosterFromMySQL();
+                //dataBoosters.setBooster(BoostersUnit.getByName(dataBooster[0]), Long.parseLong(dataBooster[1]), Long.parseLong(dataBooster[2]));
             }
-        });
+        }
     }
 
     public void onLogin() {
         RcbAPI.getInstance().getAccounts().add(this);
-        getTaskAsync();
+        getTaskNoAsync();
     }
 
     public void onLogout() {

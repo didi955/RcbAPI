@@ -15,8 +15,6 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        Account account = new Account(player.getUniqueId());
-        account.onLogin();
 
         PacketReader reader = new PacketReader();
         reader.inject(player);

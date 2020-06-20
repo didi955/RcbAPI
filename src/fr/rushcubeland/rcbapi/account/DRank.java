@@ -1,5 +1,7 @@
 package fr.rushcubeland.rcbapi.account;
 
+import fr.rushcubeland.rcbapi.RcbAPI;
+
 import java.util.UUID;
 
 public class DRank extends AbstractData {
@@ -14,6 +16,7 @@ public class DRank extends AbstractData {
     public void setRank(RankUnit rank){
         grade = rank;
         end = -1;
+        RcbAPI.getInstance().getTablist().sendTabList(getPlayer());
     }
     public void setRank(RankUnit rank, long seconds){
         if(seconds <= 0){

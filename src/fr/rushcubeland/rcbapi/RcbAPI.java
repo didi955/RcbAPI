@@ -15,7 +15,6 @@ import fr.rushcubeland.rcbapi.network.Server;
 import fr.rushcubeland.rcbapi.queue.Queue;
 import fr.rushcubeland.rcbapi.tools.PacketReader;
 import fr.rushcubeland.rcbapi.tools.cameras.CameraManager;
-import fr.rushcubeland.rcbapi.tools.hologram.Hologram;
 import fr.rushcubeland.rcbapi.tools.npc.NPC;
 import fr.rushcubeland.rcbapi.tools.scoreboard.ScoreboardSign;
 import fr.rushcubeland.rcbapi.tools.tablist.Tablist;
@@ -35,10 +34,9 @@ public class RcbAPI extends JavaPlugin {
 
     public static NPC npc = null;
 
-    private Hologram hologram;
-    private Tablist tablist;
     private CameraManager cameraManager;
     private Queue queue;
+    private Tablist tablist;
 
     public static DataManager data;
 
@@ -65,6 +63,9 @@ public class RcbAPI extends JavaPlugin {
             loadNPC();
 
         Server.initServerGroup();
+        Tablist tablist = new Tablist(this);
+        tablist.initTabListTeam();
+        this.tablist = tablist;
 
         DatabaseManager.initAllDatabaseConnections();
 
@@ -154,13 +155,7 @@ public class RcbAPI extends JavaPlugin {
                     file.getString("data." + npc + ".signature")));
 
             NPC.loadNPC(location, gameProfile);
-
         });
-
-    }
-
-    public Hologram getHologram() {
-        return hologram;
     }
 
     public Tablist getTablist() {
@@ -174,6 +169,4 @@ public class RcbAPI extends JavaPlugin {
     public Queue getQueue(){
         return queue;
     }
-
-
 }
