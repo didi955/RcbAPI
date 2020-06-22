@@ -11,19 +11,21 @@ import java.util.Arrays;
 public enum RankUnit {
 
     JOUEUR("Joueur", 50, "§7", ChatColor.GRAY),
-    VIP("VIP", 40, "§e[VIP] §f", ChatColor.YELLOW),
-    VIPP("VIP+", 30, "§b[VIP+] §f", ChatColor.DARK_PURPLE),
-    ASSISTANT("Assistant", 21, "§a[Assistant] §f", ChatColor.GREEN),
-    ASSISTANTE("Assistante", 20, "§a[Assistante] §f", ChatColor.GREEN),
-    DEVELOPPEUR("Développeur", 14, "§9[Développeur] §f", ChatColor.BLUE),
-    DEVELOPPEUSE("Développeuse", 15, "§9[Développeuse] §f", ChatColor.BLUE),
-    MODERATEUR("Modérateur", 12, "§6[Modérateur] §f", ChatColor.GOLD),
-    MODERATRICE("Modératrice", 11, "§6[Modératrice] §f", ChatColor.GOLD),
-    COPINE("Copine", 10, "§d[♥] §f", ChatColor.LIGHT_PURPLE),
-    AMI("Ami", 8, "§3[Ami] §f", ChatColor.DARK_AQUA),
-    AMIE("Amie", 7, "§3[Amie] §f", ChatColor.DARK_AQUA),
+    VIP("VIP", 45, "§e[VIP] §f", ChatColor.YELLOW),
+    VIPP("VIP+", 40, "§b[VIP+] §f", ChatColor.DARK_PURPLE),
+    INFLUENCEUR("Influenceur", 38, "§b[Influenceur] §f", ChatColor.AQUA),
+    INFLUENCEUSE("Influenceuse", 37, "§b[Influenceuse] §f", ChatColor.AQUA),
+    ASSISTANT("Assistant", 35, "§a[Assistant] §f", ChatColor.GREEN),
+    ASSISTANTE("Assistante", 30, "§a[Assistante] §f", ChatColor.GREEN),
+    DEVELOPPEUR("Développeur", 25, "§9[Développeur] §f", ChatColor.BLUE),
+    DEVELOPPEUSE("Développeuse", 20, "§9[Développeuse] §f", ChatColor.BLUE),
+    AMI("Ami", 15, "§3[Ami] §f", ChatColor.DARK_AQUA),
+    AMIE("Amie", 14, "§3[Amie] §f", ChatColor.DARK_AQUA),
+    COPINE("Copine", 12, "§d[♥] §f", ChatColor.LIGHT_PURPLE),
+    MODERATEUR("Modérateur", 11, "§6[Modérateur] §f", ChatColor.GOLD),
+    MODERATRICE("Modératrice", 10, "§6[Modératrice] §f", ChatColor.GOLD),
     RESPMOD("RespMod", 5, "§6[RespMod] §f", ChatColor.GOLD),
-    ADMINISTRATEUR("Admin", 0, "§c[Admin] §f", ChatColor.RED);
+    ADMINISTRATEUR("Admin", 0, "§4[Admin] §f", ChatColor.RED);
 
     private String name;
     private int power;
