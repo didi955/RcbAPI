@@ -1,7 +1,9 @@
 package fr.rushcubeland.rcbapi.account;
 
+import fr.rushcubeland.rcbapi.RcbAPI;
 import fr.rushcubeland.rcbapi.database.DatabaseManager;
 import fr.rushcubeland.rcbapi.database.MySQL;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.sql.SQLException;
@@ -90,9 +92,7 @@ public enum RankUnit {
     }
 
     private ArrayList<String> getDataofRankPermissionsFromMySQL(){
-
         ArrayList<String> dataRankperms = new ArrayList<>();
-
         try {
             MySQL.query(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("SELECT permission FROM rank_permissions WHERE grade='%s'",
                     getName()), rs -> {
@@ -106,36 +106,48 @@ public enum RankUnit {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-
             });
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return dataRankperms;
-
     }
 
     private void sendDataofRankPermissionsToMySQL(){
+        if(!getPermissions().isEmpty()){
+            for(String perms : getPermissions()){
+                try {
 
-        for(String perms : getPermissions()){
-            try {
+                    MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO rank_permissions (grade, permission) VALUES ('%s', '%s')",
+                            getName(), perms));
 
-                MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO rank_permissions (grade, permission) VALUES ('%s', '%s')",
-                        getName(), perms));
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         }
+    }
 
+    private void sendTaskAsync(){
+        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+            sendDataofRankPermissionsToMySQL();
+        });
+    }
+
+    private void getTaskAsync(){
+        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+            ArrayList<String> dataRankperms = getDataofRankPermissionsFromMySQL();
+            for(String perm : dataRankperms){
+                addPermission(perm);
+            }
+        });
     }
 
     public void onDisableServer(){
-        sendDataofRankPermissionsToMySQL();
+        sendTaskAsync();
     }
 
     public void onEnableServer(){
-        permissions = getDataofRankPermissionsFromMySQL();
+        getTaskAsync();
     }
 }

@@ -81,6 +81,7 @@ public class RcbAPI extends JavaPlugin {
         Bukkit.getLogger().info("RcbAPI enabled");
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "rcbproxy:main");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new Network());
 
     }

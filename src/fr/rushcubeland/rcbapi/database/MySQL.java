@@ -58,12 +58,12 @@ public class MySQL {
                     "end BIGINT)");
 
             update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), "CREATE TABLE IF NOT EXISTS rank_permissions (" +
-                    "`#` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "grade VARCHAR(255), " +
                     "permission VARCHAR(255))");
 
             update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), "CREATE TABLE IF NOT EXISTS player_permissions (" +
-                    "`#` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                     "uuid VARCHAR(255), " +
                     "permission VARCHAR(255))");
         } catch (SQLException e) {
