@@ -1,6 +1,5 @@
 package fr.rushcubeland.rcbapi.listeners;
 
-import fr.rushcubeland.rcbapi.account.Account;
 import fr.rushcubeland.rcbapi.tools.PacketReader;
 import fr.rushcubeland.rcbapi.tools.npc.NPC;
 import org.bukkit.entity.Player;
@@ -19,13 +18,10 @@ public class PlayerJoin implements Listener {
         PacketReader reader = new PacketReader();
         reader.inject(player);
 
-
         if(NPC.getNPCs() == null || NPC.getNPCs().isEmpty()){
             return;
         }
         NPC.addJoinPacket(player);
-
     }
-
 
 }
