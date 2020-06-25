@@ -1,11 +1,9 @@
 package fr.rushcubeland.rcbapi.network;
 
-import org.bukkit.entity.Player;
-
 public enum ServerUnit {
 
-    Lobby_1("Lobby", ServerGroup.Lobby, 500, "127.0.0.1",25566);
-    //Minigame_1("Minigame_1", ServerGroup.Minigame, 16, "127.0.0.1", 25566),
+    Lobby_1("Lobby", ServerGroup.Lobby, 500, "127.0.0.1",25566),
+    DeterrentBorder_1("DeterrentBorder_1", ServerGroup.Minigame, 16, "127.0.0.1", 25567);
     //Minigame_2("Minigame_2", ServerGroup.Minigame,16, "127.0.0.1", 25567),
     //Minigame_3("Minigame_3", ServerGroup.Minigame,16, "127.0.0.1", 25568);
 
