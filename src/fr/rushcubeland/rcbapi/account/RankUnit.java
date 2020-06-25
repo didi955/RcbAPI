@@ -128,10 +128,8 @@ public enum RankUnit {
         }
     }
 
-    private void sendTaskAsync(){
-        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
-            sendDataofRankPermissionsToMySQL();
-        });
+    private void sendTaskNoAsync(){
+        sendDataofRankPermissionsToMySQL();
     }
 
     private void getTaskAsync(){
@@ -144,7 +142,7 @@ public enum RankUnit {
     }
 
     public void onDisableServer(){
-        sendTaskAsync();
+        sendTaskNoAsync();
     }
 
     public void onEnableServer(){
