@@ -157,17 +157,15 @@ public class Account extends AbstractData {
         }
     }
 
-    private void sendTaskAsync(){
-        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
-            sendDataOfPlayerToMysql();
-            //sendDataOfPlayerPermissionsToMySQL();
-            //sendDataOfPlayerBoosterToMysql();
-        });
+    private void sendTaskNoAsync(){
+        sendDataOfPlayerToMysql();
+        sendDataOfPlayerPermissionsToMySQL();
+        //sendDataOfPlayerBoosterToMysql();
     }
 
     private void getTaskNoAsync(){
         String[] data = getDataOfPlayerFromMySQL();
-        //ArrayList<String> dataPlayerperms = getDataOfPlayerPermissionsFromMySQL();
+        ArrayList<String> dataPlayerperms = getDataOfPlayerPermissionsFromMySQL();
         // = getDataOfPlayerBoosterFromMySQL();
         //}
 
@@ -179,6 +177,10 @@ public class Account extends AbstractData {
         {
             dataRank.setRank(RankUnit.getByName(data[0]), Long.parseLong(data[1]));
             dataCoins.setCoins(Long.parseLong(data[2]));
+            for(String perm : dataPlayerperms){
+                dataPermissions.addPermission(perm);
+                getPlayer().addAttachment(RcbAPI.getInstance()).setPermission(perm, true);
+            }
             if(hasBooster){
                 //String[] dataBooster = getDataOfPlayerBoosterFromMySQL();
                 //dataBoosters.setBooster(BoostersUnit.getByName(dataBooster[0]), Long.parseLong(dataBooster[1]), Long.parseLong(dataBooster[2]));
@@ -192,7 +194,7 @@ public class Account extends AbstractData {
     }
 
     public void onLogout() {
-        sendTaskAsync();
+        sendTaskNoAsync();
         RcbAPI.getInstance().getAccounts().remove(this);
     }
 
