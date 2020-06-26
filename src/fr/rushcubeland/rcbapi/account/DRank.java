@@ -28,7 +28,6 @@ public class DRank extends AbstractData {
         for(String perm : rank.getPermissions()){
             Bukkit.getPlayer(uuid).addAttachment(RcbAPI.getInstance()).setPermission(perm, true);
         }
-        ChangeRankToProxy(rank, end);
         RcbAPI.getInstance().getTablist().setTabListPlayer(getPlayer(), rank);
     }
     public void setRank(RankUnit rank, long seconds){
@@ -47,7 +46,6 @@ public class DRank extends AbstractData {
             for(String perm : rank.getPermissions()){
                 Bukkit.getPlayer(uuid).addAttachment(RcbAPI.getInstance()).setPermission(perm, true);
             }
-            ChangeRankToProxy(rank, end);
         }
     }
 
