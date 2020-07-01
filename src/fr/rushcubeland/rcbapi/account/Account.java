@@ -58,7 +58,7 @@ public class Account extends AbstractData {
     }
 
     private void sendDataOfPlayerToMysql() {
-        if(newPlayer == true) {
+        if(newPlayer) {
             try {
                 MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO accounts (uuid, grade, grade_end, coins) VALUES ('%s', '%s', '%s', '%s')",
                         getUUID(), dataRank.getRank().getName(), dataRank.getEnd(), dataCoins.getCoins()));
@@ -79,12 +79,27 @@ public class Account extends AbstractData {
 
     private void sendDataOfPlayerPermissionsToMySQL(){
         for(String perms : dataPermissions.getPermissions()){
-            try {
-                MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO player_permissions (uuid, permission) VALUES ('%s', '%s')",
-                        getUUID(), perms));
 
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            try {
+                MySQL.query(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("SELECT permission FROM player_permissions WHERE uuid='%s' AND permission='%s'",
+                        getUUID(), perms), rs -> {
+
+                    try {
+                        if(!rs.next()){
+                            try {
+                                MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO player_permissions (uuid, permission) VALUES ('%s', '%s')",
+                                        getUUID(), perms));
+
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                        }
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
+                });
+            } catch (SQLException exception) {
+                exception.printStackTrace();
             }
         }
     }
@@ -97,7 +112,7 @@ public class Account extends AbstractData {
                     getUUID()), rs -> {
 
                 try {
-                    if(rs.next()){
+                    while(rs.next()){
 
                         dataPlayerperms.add(rs.getString("permission"));
 
@@ -138,7 +153,7 @@ public class Account extends AbstractData {
     }
 
     private void sendDataOfPlayerBoosterToMysql() {
-        if(hasBooster == true) {
+        if(hasBooster) {
             try {
                 MySQL.update(DatabaseManager.Main_BDD.getDatabaseAccess().getConnection(), String.format("INSERT INTO boosters (uuid, booster, start, end) VALUES ('%s', '%s', '%s', '%s')",
                         getUUID(), dataBoosters.getBooster().getName(), dataBoosters.getStart(), dataBoosters.getEnd()));
