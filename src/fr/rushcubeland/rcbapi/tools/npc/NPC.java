@@ -6,6 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import fr.rushcubeland.rcbapi.RcbAPI;
 import fr.rushcubeland.rcbapi.tools.ItemBuilder;
+import fr.rushcubeland.rcbapi.tools.hologram.Hologram;
 import net.minecraft.server.v1_15_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -81,6 +82,12 @@ public class NPC {
             connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             connection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
             connection.sendPacket(new PacketPlayOutEntityHeadRotation(npc, (byte) (npc.yaw * 256 / 360)));
+            Bukkit.getScheduler().runTaskLater(RcbAPI.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                    connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc));
+                }
+            }, 50L);
 
         }
     }
@@ -119,14 +126,20 @@ public class NPC {
         PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
         connection.sendPacket(new PacketPlayOutEntityDestroy(npc.getId()));
 
-
     }
 
     public static void addJoinPacket(Player player){
         for(EntityPlayer npc : NPC){
             PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+            connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
             connection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
             connection.sendPacket(new PacketPlayOutEntityHeadRotation(npc, (byte) (npc.yaw * 256 / 360)));
+            Bukkit.getScheduler().runTaskLater(RcbAPI.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                    connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, npc));
+                }
+            }, 50L);
         }
     }
     public static List<EntityPlayer> getNPCs(){

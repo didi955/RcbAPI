@@ -17,13 +17,13 @@ public enum RankUnit {
     VIPP("VIP+", 40, "§b[VIP+] §f", ChatColor.DARK_PURPLE),
     INFLUENCEUR("Influenceur", 38, "§b[Influenceur] §f", ChatColor.AQUA),
     INFLUENCEUSE("Influenceuse", 37, "§b[Influenceuse] §f", ChatColor.AQUA),
-    ASSISTANT("Assistant", 35, "§a[Assistant] §f", ChatColor.GREEN),
-    ASSISTANTE("Assistante", 30, "§a[Assistante] §f", ChatColor.GREEN),
-    DEVELOPPEUR("Développeur", 25, "§9[Développeur] §f", ChatColor.BLUE),
-    DEVELOPPEUSE("Développeuse", 20, "§9[Développeuse] §f", ChatColor.BLUE),
-    AMI("Ami", 15, "§3[Ami] §f", ChatColor.DARK_AQUA),
-    AMIE("Amie", 14, "§3[Amie] §f", ChatColor.DARK_AQUA),
-    COPINE("Copine", 12, "§d[♥] §f", ChatColor.LIGHT_PURPLE),
+    AMI("Ami", 35, "§3[Ami] §f", ChatColor.DARK_AQUA),
+    AMIE("Amie", 30, "§3[Amie] §f", ChatColor.DARK_AQUA),
+    COPINE("Copine", 25, "§d[♥] §f", ChatColor.LIGHT_PURPLE),
+    ASSISTANT("Assistant", 20, "§a[Assistant] §f", ChatColor.GREEN),
+    ASSISTANTE("Assistante", 15, "§a[Assistante] §f", ChatColor.GREEN),
+    DEVELOPPEUR("Développeur", 10, "§9[Développeur] §f", ChatColor.BLUE),
+    DEVELOPPEUSE("Développeuse", 15, "§9[Développeuse] §f", ChatColor.BLUE),
     MODERATEUR("Modérateur", 11, "§6[Modérateur] §f", ChatColor.GOLD),
     MODERATRICE("Modératrice", 10, "§6[Modératrice] §f", ChatColor.GOLD),
     RESPMOD("RespMod", 5, "§6[RespMod] §f", ChatColor.GOLD),
@@ -98,7 +98,7 @@ public enum RankUnit {
                     getName()), rs -> {
 
                 try {
-                    if(rs.next()){
+                    while(rs.next()){
 
                         dataRankperms.add(rs.getString("permission"));
 

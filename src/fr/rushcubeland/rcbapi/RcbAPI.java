@@ -78,10 +78,11 @@ public class RcbAPI extends JavaPlugin {
 
         Network.startTaskUpdateSlotsServer();
 
-        Bukkit.getLogger().info("RcbAPI enabled");
-
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new Network());
+
+        Bukkit.getLogger().info("RcbAPI enabled");
+
 
     }
 
@@ -169,4 +170,5 @@ public class RcbAPI extends JavaPlugin {
     public Queue getQueue(){
         return queue;
     }
+
 }

@@ -70,7 +70,8 @@ public class Tablist {
             teams.add(team);
             team.setPrefix(rank.getPrefix());
         }
-        Team teamNPC = scoreboard.registerNewTeam(Integer.toString(999));
+        Team teamNPC = scoreboard.registerNewTeam(Integer.toString(9999));
+        teamNPC.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
         for(EntityPlayer npc : NPC.getNPCs()){
             teamNPC.addEntry(npc.getName());
         }
