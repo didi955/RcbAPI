@@ -7,7 +7,7 @@ public enum ServerGroup {
     Lobby(),
     Minigame();
 
-    private ArrayList<ServerUnit> serversInServerGroup = new ArrayList<>();
+    private final ArrayList<ServerUnit> serversInServerGroup = new ArrayList<>();
 
     ServerGroup(){
     }

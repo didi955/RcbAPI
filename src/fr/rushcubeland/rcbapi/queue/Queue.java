@@ -45,7 +45,7 @@ public class Queue {
                 }
                 count = count+1;
             }
-            if(RcbAPI.getInstance().getAccount(player).get().getDataRank().getRank().getPower() <= 10){
+            if(RcbAPI.getInstance().getAccount(player).get().getDataRank().getRank().getPower() <= 38){
                 player.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + queueUnit.getName() + ", §6Priorité: §cTrès Élevée");
             }
             else
@@ -118,6 +118,6 @@ public class Queue {
     public boolean hasPriorityInQueues(Player player){
         Account playerAccount = RcbAPI.getInstance().getAccount(player).get();
         RankUnit playerRank = playerAccount.getDataRank().getRank();
-        return playerRank.getPower() <= 15 && playerAccount.getDataRank().isValid();
+        return playerRank.getPower() <= 45 && playerAccount.getDataRank().isValid();
     }
 }

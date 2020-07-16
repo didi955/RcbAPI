@@ -20,6 +20,7 @@ public enum ServerUnit {
         this.serverGroup = serverGroup;
         this.port = port;
         this.ip = ip;
+        serverGroup.getServersInGroup().add(this);
     }
 
     public String getName() {

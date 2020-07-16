@@ -12,22 +12,22 @@ import java.util.Arrays;
 
 public enum RankUnit {
 
-    JOUEUR("Joueur", 50, "§7", ChatColor.GRAY),
-    VIP("VIP", 45, "§e[VIP] §f", ChatColor.YELLOW),
-    VIPP("VIP+", 40, "§b[VIP+] §f", ChatColor.DARK_PURPLE),
-    INFLUENCEUR("Influenceur", 38, "§b[Influenceur] §f", ChatColor.AQUA),
-    INFLUENCEUSE("Influenceuse", 37, "§b[Influenceuse] §f", ChatColor.AQUA),
-    AMI("Ami", 35, "§3[Ami] §f", ChatColor.DARK_AQUA),
-    AMIE("Amie", 30, "§3[Amie] §f", ChatColor.DARK_AQUA),
-    COPINE("Copine", 25, "§d[♥] §f", ChatColor.LIGHT_PURPLE),
-    ASSISTANT("Assistant", 20, "§a[Assistant] §f", ChatColor.GREEN),
-    ASSISTANTE("Assistante", 15, "§a[Assistante] §f", ChatColor.GREEN),
-    DEVELOPPEUR("Développeur", 10, "§9[Développeur] §f", ChatColor.BLUE),
-    DEVELOPPEUSE("Développeuse", 15, "§9[Développeuse] §f", ChatColor.BLUE),
-    MODERATEUR("Modérateur", 11, "§6[Modérateur] §f", ChatColor.GOLD),
-    MODERATRICE("Modératrice", 10, "§6[Modératrice] §f", ChatColor.GOLD),
-    RESPMOD("RespMod", 5, "§6[RespMod] §f", ChatColor.GOLD),
-    ADMINISTRATEUR("Admin", 0, "§4[Admin] §f", ChatColor.RED);
+    JOUEUR("Joueur", 50, "" + ChatColor.GRAY, ChatColor.GRAY),
+    VIP("VIP", 45,  ChatColor.YELLOW + "[VIP] " + ChatColor.WHITE, ChatColor.YELLOW),
+    VIPP("VIP+", 40,    ChatColor.DARK_PURPLE + "[VIP+] " + ChatColor.WHITE, ChatColor.DARK_PURPLE),
+    INFLUENCEUR("Influenceur", 38, ChatColor.AQUA + "[Influenceur] " + ChatColor.WHITE, ChatColor.AQUA),
+    INFLUENCEUSE("Influenceuse", 37, ChatColor.AQUA + "[Influenceuse] " + ChatColor.WHITE, ChatColor.AQUA),
+    AMI("Ami", 35, ChatColor.DARK_AQUA + "[Ami] " + ChatColor.WHITE, ChatColor.DARK_AQUA),
+    AMIE("Amie", 30, ChatColor.DARK_AQUA + "[Amie] " + ChatColor.WHITE, ChatColor.DARK_AQUA),
+    COPINE("Copine", 25, ChatColor.LIGHT_PURPLE + "[♥] " + ChatColor.WHITE, ChatColor.LIGHT_PURPLE),
+    ASSISTANT("Assistant", 20, ChatColor.GREEN +"[Assistant] " + ChatColor.WHITE, ChatColor.GREEN),
+    ASSISTANTE("Assistante", 15, ChatColor.GREEN + "[Assistante] " + ChatColor.WHITE, ChatColor.GREEN),
+    DEVELOPPEUR("Développeur", 10, ChatColor.BLUE + "[Développeur] " + ChatColor.WHITE, ChatColor.BLUE),
+    DEVELOPPEUSE("Développeuse", 9, ChatColor.BLUE + "[Développeuse] " + ChatColor.WHITE, ChatColor.BLUE),
+    MODERATEUR("Modérateur", 8, ChatColor.GOLD + "[Modérateur] " + ChatColor.WHITE, ChatColor.GOLD),
+    MODERATRICE("Modératrice", 7, ChatColor.GOLD + "[Modératrice] " + ChatColor.WHITE, ChatColor.GOLD),
+    RESPMOD("RespMod", 5, ChatColor.GOLD + "[RespMod] " + ChatColor.WHITE, ChatColor.GOLD),
+    ADMINISTRATEUR("Admin", 0, ChatColor.DARK_RED + "[Admin] " + ChatColor.WHITE, ChatColor.DARK_RED);
 
     private String name;
     private int power;

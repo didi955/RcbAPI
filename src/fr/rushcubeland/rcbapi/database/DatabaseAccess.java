@@ -34,7 +34,7 @@ public class DatabaseAccess {
 
         this.hikariDataSource = new HikariDataSource(hikariConfig);
 
-        System.out.println("Connection done with BDD");
+        System.out.println("[RcbAPI] Connection done with BDD");
 
     }
 

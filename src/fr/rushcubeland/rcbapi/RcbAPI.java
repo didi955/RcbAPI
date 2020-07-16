@@ -81,7 +81,7 @@ public class RcbAPI extends JavaPlugin {
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new Network());
 
-        Bukkit.getLogger().info("RcbAPI enabled");
+        RcbAPI.getInstance().getLogger().info("RcbAPI enabled");
 
 
     }
@@ -99,7 +99,7 @@ public class RcbAPI extends JavaPlugin {
         //BattlePassUnit.getCurrentBattlePass().onDisableServer();
         DatabaseManager.closeAllDatabaseConnection();
 
-        Bukkit.getLogger().info("RcbAPI disabled");
+        RcbAPI.getInstance().getLogger().info("RcbAPI disabled");
 
     }
 
