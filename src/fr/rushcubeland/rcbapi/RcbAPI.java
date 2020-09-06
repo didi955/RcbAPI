@@ -2,11 +2,14 @@ package fr.rushcubeland.rcbapi;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import fr.rushcubeland.rcbapi.account.Account;
-import fr.rushcubeland.rcbapi.account.RankUnit;
+import fr.rushcubeland.commons.AFriends;
+import fr.rushcubeland.commons.AOptions;
+import fr.rushcubeland.commons.Account;
+import fr.rushcubeland.rcbapi.data.redis.RedisAccess;
+import fr.rushcubeland.rcbapi.data.sql.DatabaseManager;
+import fr.rushcubeland.rcbapi.data.sql.MySQL;
+import fr.rushcubeland.rcbapi.rank.RankUnit;
 import fr.rushcubeland.rcbapi.commands.NpcCommand;
-import fr.rushcubeland.rcbapi.database.DatabaseManager;
-import fr.rushcubeland.rcbapi.database.MySQL;
 import fr.rushcubeland.rcbapi.files.DataManager;
 import fr.rushcubeland.rcbapi.listeners.PlayerJoin;
 import fr.rushcubeland.rcbapi.listeners.PlayerQuit;
@@ -25,6 +28,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 
 import java.util.*;
 
@@ -39,8 +44,6 @@ public class RcbAPI extends JavaPlugin {
     private Tablist tablist;
 
     public static DataManager data;
-
-    private List<Account> accounts;
 
     public Map<Player, ScoreboardSign> boards = new HashMap<>();
 
@@ -71,9 +74,9 @@ public class RcbAPI extends JavaPlugin {
 
         MySQL.createTables();
 
-        accounts = new ArrayList<>();
+        RedisAccess.init();
 
-        initAllRankPermissions();
+        //initAllRankPermissions();
         //BattlePassUnit.getCurrentBattlePass().onEnableServer();
 
         Network.startTaskUpdateSlotsServer();
@@ -95,7 +98,7 @@ public class RcbAPI extends JavaPlugin {
                 NPC.removeNPC(player, npc);
             }
         }
-        closeAllRankPermissions();
+        //closeAllRankPermissions();
         //BattlePassUnit.getCurrentBattlePass().onDisableServer();
         DatabaseManager.closeAllDatabaseConnection();
 
@@ -121,16 +124,64 @@ public class RcbAPI extends JavaPlugin {
         pm.registerEvents(new PlayerQuit(), this);
     }
 
+    public interface Callback<T>
+    {
+        void execute(T response);
+    }
+
+    public void getAccountOptionsCallback(Player player, final Callback<AOptions> callback){
+
+        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+
+            final RedissonClient redissonClient = RedisAccess.INSTANCE.getRedissonClient();
+            final String key = "options:" + player.getUniqueId().toString();
+            final RBucket<AOptions> accountRBucket = redissonClient.getBucket(key);
+
+            final AOptions account = accountRBucket.get();
+
+            Bukkit.getScheduler().runTask(RcbAPI.getInstance(), () -> {
+
+                callback.execute(account);
+            });
+        });
+    }
+
+    public void getAccountCallback(Player player, final Callback<Account> callback){
+
+        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+
+            final RedissonClient redissonClient = RedisAccess.INSTANCE.getRedissonClient();
+            final String key = "account:" + player.getUniqueId().toString();
+            final RBucket<Account> accountRBucket = redissonClient.getBucket(key);
+
+            final Account account = accountRBucket.get();
+
+            Bukkit.getScheduler().runTask(RcbAPI.getInstance(), () -> {
+
+                callback.execute(account);
+            });
+        });
+    }
+
+    public void getAccountFriendsCallback(Player player, final Callback<AFriends> callback){
+
+        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+
+            final RedissonClient redissonClient = RedisAccess.INSTANCE.getRedissonClient();
+            final String key = "friends:" + player.getUniqueId().toString();
+            final RBucket<AFriends> accountRBucket = redissonClient.getBucket(key);
+
+            final AFriends account = accountRBucket.get();
+
+            Bukkit.getScheduler().runTask(RcbAPI.getInstance(), () -> {
+
+                callback.execute(account);
+            });
+        });
+    }
+
     private void registerCommands(){
         getCommand("createnpc").setExecutor(new NpcCommand(this));
-    }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public Optional<Account> getAccount(Player player){
-        return new ArrayList<>(accounts).stream().filter(a -> a.getUUID().equals(player.getUniqueId().toString())).findFirst();
     }
 
     public static FileConfiguration getData(){

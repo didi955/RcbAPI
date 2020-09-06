@@ -1,12 +1,9 @@
 package fr.rushcubeland.rcbapi.listeners;
 
-import fr.rushcubeland.rcbapi.RcbAPI;
-import fr.rushcubeland.rcbapi.account.Account;
 import fr.rushcubeland.rcbapi.tools.PacketReader;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuit implements Listener {

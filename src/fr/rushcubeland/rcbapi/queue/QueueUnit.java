@@ -1,11 +1,15 @@
 package fr.rushcubeland.rcbapi.queue;
 
+import fr.rushcubeland.commons.Account;
 import fr.rushcubeland.rcbapi.RcbAPI;
+import fr.rushcubeland.rcbapi.data.redis.RedisAccess;
 import fr.rushcubeland.rcbapi.network.Network;
 import fr.rushcubeland.rcbapi.network.ServerGroup;
 import fr.rushcubeland.rcbapi.network.ServerUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,13 +70,23 @@ public enum QueueUnit {
         tid = Bukkit.getScheduler().scheduleSyncRepeatingTask(RcbAPI.getInstance(), () -> {
             for(Player pls : getPlayers()){
                 if(RcbAPI.getInstance().getQueue().hasPriorityInQueues(pls)){
-                    if(RcbAPI.getInstance().getAccount(pls).get().getDataRank().getRank().getPower() <= 10){
-                        pls.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + QueueUnit.getInstance().getName()  + ", §6Priorité: §cTrès Élevée");
-                    }
-                    else
-                    {
-                        pls.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + QueueUnit.getInstance().getName() + ", §6Priorité: §cÉlevée");
-                    }
+                    Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+
+                        final RedissonClient redissonClient = RedisAccess.INSTANCE.getRedissonClient();
+                        final String key = "account:" + pls.getUniqueId().toString();
+                        final RBucket<Account> accountRBucket = redissonClient.getBucket(key);
+
+                        final Account account = accountRBucket.get();
+
+                        if(account.getRank().getPower() <= 10){
+                            pls.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + QueueUnit.getInstance().getName()  + ", §6Priorité: §cTrès Élevée");
+                        }
+                        else
+                        {
+                            pls.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + QueueUnit.getInstance().getName() + ", §6Priorité: §cÉlevée");
+                        }
+
+                    });
                 }
                 else {
                     pls.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + QueueUnit.getInstance().getName()  + ", §6Priorité: §fNormale");

@@ -1,4 +1,4 @@
-package fr.rushcubeland.rcbapi.database;
+package fr.rushcubeland.rcbapi.data.sql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -34,7 +34,7 @@ public class DatabaseAccess {
 
         this.hikariDataSource = new HikariDataSource(hikariConfig);
 
-        System.out.println("[RcbAPI] Connection done with BDD");
+        System.out.println("[RcbProxy] Connection done with BDD");
 
     }
 

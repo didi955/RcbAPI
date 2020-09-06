@@ -1,4 +1,4 @@
-package fr.rushcubeland.rcbapi.database;
+package fr.rushcubeland.rcbapi.data.sql;
 
 public enum DatabaseManager {
 

@@ -1,8 +1,8 @@
 package fr.rushcubeland.rcbapi.battlepass;
 
 import fr.rushcubeland.rcbapi.RcbAPI;
-import fr.rushcubeland.rcbapi.database.DatabaseManager;
-import fr.rushcubeland.rcbapi.database.MySQL;
+import fr.rushcubeland.rcbapi.data.sql.DatabaseManager;
+import fr.rushcubeland.rcbapi.data.sql.MySQL;
 import org.bukkit.Bukkit;
 
 import java.sql.SQLException;

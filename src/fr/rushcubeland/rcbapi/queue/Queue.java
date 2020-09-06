@@ -1,11 +1,15 @@
 package fr.rushcubeland.rcbapi.queue;
 
+import fr.rushcubeland.commons.Account;
 import fr.rushcubeland.rcbapi.RcbAPI;
-import fr.rushcubeland.rcbapi.account.Account;
-import fr.rushcubeland.rcbapi.account.RankUnit;
+import fr.rushcubeland.rcbapi.data.redis.RedisAccess;
+import fr.rushcubeland.rcbapi.rank.RankUnit;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 
 public class Queue {
 
@@ -18,7 +22,6 @@ public class Queue {
         if(playerIsInTheQueue(player, queueUnit)){
             player.sendMessage("§cVous etes déjà dans cette file d'attente !");
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, SoundCategory.NEUTRAL, 0F, 0F);
-            return;
         }
         else if(playerIsInAQueue(player)){
             leaveQueue(player, getCurrentQueue(player));
@@ -36,22 +39,36 @@ public class Queue {
 
         // MESSAGES + SOUNDS
         if(hasPriorityInQueues(player)){
-            int count = 0;
-            for(Player pls : queueUnit.getPlayers()){
-                if(RcbAPI.getInstance().getAccount(pls).get().getDataRank().getRank().getPower() > RcbAPI.getInstance().getAccount(player).get().getDataRank().getRank().getPower()){
-                    queueUnit.getPlayers().remove(player);
-                    queueUnit.getPlayers().add(count, player);
-                    break;
+            Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+                final RedissonClient redissonClient = RedisAccess.INSTANCE.getRedissonClient();
+                final String key = "account:" + player.getUniqueId().toString();
+                final RBucket<Account> accountRBucket = redissonClient.getBucket(key);
+
+                final Account account = accountRBucket.get();
+                int count = 0;
+                for(Player pls : queueUnit.getPlayers()){
+                    final String key2 = "account:" + pls.getUniqueId().toString();
+                    final RBucket<Account> accountRBucket2 = redissonClient.getBucket(key);
+
+                    final Account account2 = accountRBucket2.get();
+
+                    if(account2.getRank().getPower() > account.getRank().getPower()){
+                        queueUnit.getPlayers().remove(player);
+                        queueUnit.getPlayers().add(count, player);
+                        break;
+                    }
+                    count = count+1;
                 }
-                count = count+1;
-            }
-            if(RcbAPI.getInstance().getAccount(player).get().getDataRank().getRank().getPower() <= 38){
-                player.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + queueUnit.getName() + ", §6Priorité: §cTrès Élevée");
-            }
-            else
-            {
-                player.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + queueUnit.getName() + ", §6Priorité: §cÉlevée");
-            }
+
+                if(account.getRank().getPower() <= 38){
+                    player.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + queueUnit.getName() + ", §6Priorité: §cTrès Élevée");
+                }
+                else
+                {
+                    player.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + queueUnit.getName() + ", §6Priorité: §cÉlevée");
+                }
+            });
+
         }
         else {
             player.sendMessage("§e[File d'attente] §6Vous avez rejoin la file pour le jeu §c" + queueUnit.getName() + ", §6Priorité: §fNormale");
@@ -116,8 +133,21 @@ public class Queue {
     }
 
     public boolean hasPriorityInQueues(Player player){
-        Account playerAccount = RcbAPI.getInstance().getAccount(player).get();
-        RankUnit playerRank = playerAccount.getDataRank().getRank();
-        return playerRank.getPower() <= 45 && playerAccount.getDataRank().isValid();
+
+        Boolean[] value = new Boolean[1];
+
+        Bukkit.getScheduler().runTaskAsynchronously(RcbAPI.getInstance(), () -> {
+
+            final RedissonClient redissonClient = RedisAccess.INSTANCE.getRedissonClient();
+            final String key = "account:" + player.getUniqueId().toString();
+            final RBucket<Account> accountRBucket = redissonClient.getBucket(key);
+            final Account account = accountRBucket.get();
+
+            RankUnit playerRank = account.getRank();
+
+            value[0] = playerRank.getPower() <= 45 && account.rankIsValid();
+
+        });
+        return value[0];
     }
 }
