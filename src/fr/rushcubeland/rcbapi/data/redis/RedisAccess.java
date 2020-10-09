@@ -19,7 +19,7 @@ public class RedisAccess {
     }
 
     public static void init(){
-        new RedisAccess(new RedisCredentials("127.0.0.1", "dh57je24&*", 6379));
+        new RedisAccess(new RedisCredentials("127.0.0.1", "*******", 6379));
     }
 
     public static void close(){
