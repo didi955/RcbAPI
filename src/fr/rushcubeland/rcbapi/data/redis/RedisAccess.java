@@ -38,7 +38,7 @@ public class RedisAccess {
         config.useSingleServer()
                 .setAddress(redisCredentials.toRedisURL())
                 .setPassword(redisCredentials.getPassword())
-                .setDatabase(3)
+                .setDatabase(RcbAPI.getData().getInt("Redis.database"))
                 .setClientName(redisCredentials.getClientName());
 
         return Redisson.create(config);
