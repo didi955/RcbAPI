@@ -61,6 +61,8 @@ public class RcbAPI extends JavaPlugin {
         registerListeners();
         registerCommands();
 
+        saveDefaultConfig();
+
         data = new DataManager(this);
         if(data.getConfig().contains("data"))
             loadNPC();

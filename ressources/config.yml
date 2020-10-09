@@ -1,0 +1,13 @@
+Databases:
+  database1:
+    host: ''
+    user: ''
+    pass: ''
+    dbname: ''
+    port: 3306
+
+Redis:
+  ip: 127.0.0.1
+  pass: ''
+  port: 6379
+  database: 3

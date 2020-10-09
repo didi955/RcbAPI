@@ -1,5 +1,6 @@
 package fr.rushcubeland.rcbapi.data.redis;
 
+import fr.rushcubeland.rcbapi.RcbAPI;
 import org.bukkit.Bukkit;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -19,7 +20,7 @@ public class RedisAccess {
     }
 
     public static void init(){
-        new RedisAccess(new RedisCredentials("127.0.0.1", "dh57je24&*", 6379));
+        new RedisAccess(new RedisCredentials(RcbAPI.getInstance().getConfig().getString("Redis.ip"), RcbAPI.getInstance().getConfig().getString("Redis.pass"), RcbAPI.getInstance().getConfig().getInt("Redis.port")));
     }
 
     public static void close(){
